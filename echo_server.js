@@ -8,6 +8,14 @@ var server = net.createServer(function(socket) {
   socket.on('data', function(data) { // socket.on是一個event emitter，當有data進來時，就會觸發後面的callback
     stringInput = data.toString().trim() // 把data存到global variable
     socket.write(data); // echo 使用者打的東西回去
+
+
+    // ***
+    // 現在這邊是一個很簡單的字串紀錄
+    // 但也可以寫成互動式資料輸入系統, 雖然 Telnet 很 low
+    // 現在的目標是寫一個教室日記 Web App
+    // ***
+
     MongoClient.connect(url, function(err, db) { // 連結到mongodb
       if(!err) { console.log("Mongodb connected!"); }
       insertDocument(db, function() { // 呼叫 insertDocument, 結束後關掉db
@@ -24,7 +32,7 @@ server.listen(8888, function() {  // 啟動 TCP server
   console.log('server listening');
 });
 
-// 設定 mongodb
+// 設定 Mongodb
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/stringDb";
 
